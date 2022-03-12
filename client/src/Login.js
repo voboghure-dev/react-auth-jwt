@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Login() {
   const userRef = useRef();
@@ -16,6 +16,14 @@ export default function Login() {
   useEffect(() => {
     setErrMsg('');
   }, [user, pwd]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setUser('');
+    setPwd('');
+    setSuccess(true);
+  };
 
   return (
     <>
