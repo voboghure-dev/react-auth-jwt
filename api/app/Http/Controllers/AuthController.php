@@ -42,6 +42,12 @@ class AuthController extends Controller {
     return $this->_token( $user );
   }
 
+  public function logout( Request $request ) {
+    auth()->user()->tokens()->delete();
+
+    return response( 'User logged out successfully', 200 );
+  }
+
   protected function _token( $user ) {
     $token = $user->createToken( 'ourapptoken' )->plainTextToken;
 
