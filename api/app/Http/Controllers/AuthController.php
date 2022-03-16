@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller {
   public function register( Request $request ) {
@@ -19,11 +20,7 @@ class AuthController extends Controller {
       'password' => bcrypt( $request->password ),
     ] );
 
-    $token = $user->createToken( 'ourapptoken' )->plainTextToken;
-
-    $response = ['user' => $user, 'token' => $token];
-
-    return response( $response, 201 );
+    return $this->_token( $user );
   }
 
   public function login( Request $request ) {
@@ -33,6 +30,23 @@ class AuthController extends Controller {
     ] );
 
     // Check if email exist
-    $user = User::where('email', $request->email)->first();
+    $user = User::where( 'email', $request->email )->first();
+
+    // Check if password match
+    if ( ! $user || ! Hash::check( $request->password, $user->password ) ) {
+      return response( [
+        'message' => 'Credential does not match',
+      ] );
+    }
+
+    return $this->_token( $user );
+  }
+
+  protected function _token( $user ) {
+    $token = $user->createToken( 'ourapptoken' )->plainTextToken;
+
+    $response = ['user' => $user, 'token' => $token];
+
+    return response( $response, 201 );
   }
 }
