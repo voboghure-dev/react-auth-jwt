@@ -25,4 +25,14 @@ class AuthController extends Controller {
 
     return response( $response, 201 );
   }
+
+  public function login( Request $request ) {
+    $request->validate( [
+      'email'    => ['required', 'string', 'email'],
+      'password' => ['required', 'string'],
+    ] );
+
+    // Check if email exist
+    $user = User::where('email', $request->email)->first();
+  }
 }
