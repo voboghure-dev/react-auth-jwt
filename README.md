@@ -6,3 +6,7 @@ A starter package built with ReactJS (as client) and Laravel (as API)
 
 1. API for CRUD operation
 2. ContextAPI for global state management
+
+## What Laravel v9 use
+
+1. Laravel Sanctum authentication system
