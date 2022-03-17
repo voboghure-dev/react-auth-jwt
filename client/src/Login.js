@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import AuthContext from './context/AuthProvider';
 
 import axios from './api/axios';
-const LOGIN_URL = '/auth';
+const LOGIN_URL = '/login';
 
 export default function Login() {
   const { setAuth } = useContext(AuthContext);
@@ -25,9 +25,36 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setUser('');
-    setPwd('');
-    setSuccess(true);
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({ email: user, password: pwd }),
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      );
+      console.log(JSON.stringify(response?.data));
+      // console.log(JSON.stringify(response));
+      const token = response?.data?.token;
+      const roles = response?.data?.roles;
+
+      setAuth({ user, pwd, token });
+      setUser('');
+      setPwd('');
+      setSuccess(true);
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg('No Server Response');
+      } else if (err.response?.status === 400) {
+        setErrMsg('Missing Username or Password');
+      } else if (err.response?.status === 401) {
+        setErrMsg('Unauthorized');
+      } else {
+        setErrMsg('Login Failed');
+      }
+      errRef.current.focus();
+    }
   };
 
   return (
