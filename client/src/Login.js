@@ -6,21 +6,21 @@ const LOGIN_URL = '/login';
 
 export default function Login() {
   const { setAuth } = useContext(AuthContext);
-  const userRef = useRef();
+  const emailRef = useRef();
   const errRef = useRef();
 
-  const [user, setUser] = useState('');
-  const [pwd, setPwd] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    userRef.current.focus();
+    emailRef.current.focus();
   }, []);
 
   useEffect(() => {
     setErrMsg('');
-  }, [user, pwd]);
+  }, [email, password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,20 +28,20 @@ export default function Login() {
     try {
       const response = await axios.post(
         LOGIN_URL,
-        JSON.stringify({ email: user, password: pwd }),
+        JSON.stringify({ email, password }),
         {
           headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
+          // withCredentials: true, //
         }
       );
       console.log(JSON.stringify(response?.data));
       // console.log(JSON.stringify(response));
       const token = response?.data?.token;
-      const roles = response?.data?.roles;
+      // const roles = response?.data?.roles;
 
-      setAuth({ user, pwd, token });
-      setUser('');
-      setPwd('');
+      setAuth({ email, password, token });
+      setEmail('');
+      setPassword('');
       setSuccess(true);
     } catch (err) {
       if (!err?.response) {
@@ -78,14 +78,14 @@ export default function Login() {
           </p>
           <h1>Sign In</h1>
           <form onSubmit={handleSubmit}>
-            <label htmlFor='username'>Username:</label>
+            <label htmlFor='email'>Email:</label>
             <input
               type='text'
-              id='username'
-              ref={userRef}
+              id='email'
+              ref={emailRef}
               autoComplete='off'
-              onChange={(e) => setUser(e.target.value)}
-              value={user}
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
               required
             />
 
@@ -93,8 +93,8 @@ export default function Login() {
             <input
               type='password'
               id='password'
-              onChange={(e) => setPwd(e.target.value)}
-              value={pwd}
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
               required
             />
             <button>Sign In</button>
