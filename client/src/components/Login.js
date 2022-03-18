@@ -47,7 +47,7 @@ export default function Login() {
       setAuth({ email, password, token });
       setEmail('');
       setPassword('');
-      // console.log(from);
+
       navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {

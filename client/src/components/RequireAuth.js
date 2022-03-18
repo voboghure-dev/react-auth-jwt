@@ -13,7 +13,7 @@ export default function RequireAuth({ allowedRoles }) {
   //   <Navigate to='/login' state={{ from: location }} replace />
   // );
 
-  return auth?.user ? (
+  return auth?.email ? (
     <Outlet />
   ) : (
     <Navigate to='/login' state={{ from: location }} replace />
