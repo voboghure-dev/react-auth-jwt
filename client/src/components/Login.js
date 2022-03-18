@@ -1,11 +1,11 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import AuthContext from '../context/AuthProvider';
+import { useContext, useEffect, useRef } from 'react';
+import useAuth from '../hooks/useAuth';
 
 import axios from '../api/axios';
 const LOGIN_URL = '/login';
 
 export default function Login() {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
   const emailRef = useRef();
   const errRef = useRef();
 
