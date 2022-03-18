@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import useAuth from '../hooks/useAuth';
 
 import axios from '../api/axios';
