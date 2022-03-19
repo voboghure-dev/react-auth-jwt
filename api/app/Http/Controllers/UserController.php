@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
+
   function create( Request $req ) {
     $user            = new User;
     $user->full_name = $req->input( 'fullName' );
@@ -26,7 +27,9 @@ class UserController extends Controller {
   }
 
   function list() {
-    return User::all();
+    $users = User::all();
+
+    return response( $users, 201 );
   }
 
   function get( $id ) {

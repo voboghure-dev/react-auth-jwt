@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,13 +21,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::group( ['middleware' => 'auth:sanctum'], function () {
   Route::post( 'logout', [AuthController::class, 'logout'] );
+
+  // User related function
+  Route::get( 'users', [UserController::class, 'list'] );
 } );
 
 Route::post( '/register', [AuthController::class, 'register'] );
 Route::post( '/login', [AuthController::class, 'login'] );
 
 Route::post( 'user/create', [UserController::class, 'create'] );
-Route::get( 'user/list', [UserController::class, 'list'] );
+
 Route::delete( 'user/delete/{id}', [UserController::class, 'delete'] );
 Route::get( 'user/{id}', [UserController::class, 'get'] );
 Route::post( 'user/update', [UserController::class, 'update'] );
