@@ -39,7 +39,7 @@ export default function Login() {
           // withCredentials: true, //
         }
       );
-      console.log(JSON.stringify(response?.data));
+      // console.log(JSON.stringify(response?.data));
       // console.log(JSON.stringify(response));
       const token = response?.data?.token;
       // const roles = response?.data?.roles;
@@ -47,6 +47,8 @@ export default function Login() {
       setAuth({ email, password, token });
       setEmail('');
       setPassword('');
+
+      // localStorage.setItem("token", token);
 
       navigate(from, { replace: true });
     } catch (err) {

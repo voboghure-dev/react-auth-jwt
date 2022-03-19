@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::group( ['middleware' => 'auth:sanctum'], function () {
   Route::post( 'logout', [AuthController::class, 'logout'] );
 
-  // User related function
+  // User related routes
   Route::get( 'users', [UserController::class, 'list'] );
 } );
 
